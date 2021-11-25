@@ -22,7 +22,7 @@ jobs:
         id: release-note
         run: |
           MY_STRING=$(cat << EOF
-          ./release-note.sh v0.1.0 ${{ env.RELEASE_VERSION }}
+          $(./release-note.sh v0.1.0 ${{ env.RELEASE_VERSION }})
           EOF
           )
           echo "::set-output name=note::$MY_STRING"
