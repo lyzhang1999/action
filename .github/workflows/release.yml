@@ -10,11 +10,12 @@ jobs:
     name: Release nhctl
     runs-on: macos-latest
     steps:
-
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+        
       - name: Release Note
         id: release-note
         run: |
-          echo ls -a
           echo "::set-output name=note::$(./release-note.sh v0.1.0 github.ref)"
 
       - name: Create Release
