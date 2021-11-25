@@ -13,7 +13,7 @@ jobs:
       - name: Get Pre Release
         id: pre-release
         run: |
-          echo "::set-output name=release::$([[ github.ref =~ 'rc' ]] && echo true || echo false)"
+          echo "::set-output name=release::$([[ github.ref =~ 'rc' ]] && echo toJSON(true) || echo toJSON(false))"
 
       - name: Release Note
         id: release-note
@@ -29,5 +29,5 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
-          prerelease: ${{ steps.pre-release.outputs.release }}
+          prerelease: ${{ fromJSON(steps.pre-release.outputs.release) }}
           body: ${{ steps.pre-release.outputs.note }}
