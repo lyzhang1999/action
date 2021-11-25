@@ -13,10 +13,13 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
+      - name: Get tag
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
       - name: Release Note
         id: release-note
         run: |
-          echo "::set-output name=note::$(./release-note.sh v0.1.0 ${{ github.ref }})"
+          echo "::set-output name=note::$(./release-note.sh v0.1.0 ${{ env.RELEASE_VERSION }})"
 
       - name: Create Release
         id: create_release
