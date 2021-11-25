@@ -21,11 +21,7 @@ jobs:
       - name: Release Note
         id: release-note
         run: |
-          MY_STRING=$(cat << EOF
-          $(./release-note.sh v0.1.0 ${{ env.RELEASE_VERSION }})
-          EOF
-          )
-          echo $MY_STRING > note.md
+          echo $(./release-note.sh v0.1.0 ${{ env.RELEASE_VERSION }}) > note.md
 
       - name: Create Release
         id: create_release
