@@ -21,7 +21,7 @@ jobs:
       - name: Release Note
         id: release-note
         run: |
-          echo $(./release-note.sh v0.1.0 ${{ env.RELEASE_VERSION }}) > note.md
+          echo "$(./release-note.sh v0.1.0 ${{ env.RELEASE_VERSION }})" > note.md
           cat note.md
 
       - name: Create Release
