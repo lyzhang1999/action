@@ -14,7 +14,7 @@ jobs:
       - name: Release Note
         id: release-note
         run: |
-          ls -a
+          echo ls -a
           echo "::set-output name=note::$(./release-note.sh v0.1.0 github.ref)"
 
       - name: Create Release
