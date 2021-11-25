@@ -18,7 +18,7 @@ jobs:
       - name: Release Note
         id: release-note
         run: |
-          echo "::set-output name=release::$(./release-note.sh v0.1.0 github.ref)"
+          echo "::set-output name=note::$(./release-note.sh v0.1.0 github.ref)"
 
       - name: Create Release
         id: create_release
@@ -30,4 +30,4 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: ${{ steps.pre-release.outputs.release }}
-          body: ${{}}
+          body: ${{ steps.pre-release.outputs.note }}
