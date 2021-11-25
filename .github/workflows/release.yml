@@ -21,7 +21,11 @@ jobs:
       - name: Release Note
         id: release-note
         run: |
-          echo "::set-output name=note::$(./release-note.sh v0.1.0 ${{ env.RELEASE_VERSION }})"
+          MY_STRING=$(cat << EOF
+          ./release-note.sh v0.1.0 ${{ env.RELEASE_VERSION }}
+          EOF
+          )
+          echo "::set-output name=note::$MY_STRING"
 
       - name: Create Release
         id: create_release
