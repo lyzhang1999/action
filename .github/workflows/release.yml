@@ -25,7 +25,7 @@ jobs:
           $(./release-note.sh v0.1.0 ${{ env.RELEASE_VERSION }})
           EOF
           )
-          echo "::set-output name=note::$MY_STRING"
+          echo $MY_STRING > note.md
 
       - name: Create Release
         id: create_release
@@ -37,5 +37,4 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          body: |
-            ${{ steps.release-note.outputs.note }}
+          body_path: note.md
