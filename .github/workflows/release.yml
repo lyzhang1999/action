@@ -10,10 +10,18 @@ jobs:
     name: Release nhctl
     runs-on: macos-latest
     steps:
-      - name: Get Pre Release
-        id: pre-release
-        run: |
-          echo "::set-output name=release::$([[ github.ref =~ 'rc' ]] && echo true || echo false)"
+      - name: Build Changelog
+        id: github_release
+        if: "!contains(github.ref,'rc')"
+        uses: mikepenz/release-changelog-builder-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          owner: "lyzhang1999"
+          repo: "action"
+          ignorePreReleases: "true"
+          toTag: ${{ github.ref }}
+          token: ${{ env.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
@@ -24,5 +32,5 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
-          prerelease: ${{ steps.pre-release.outputs.release }}
-          body: ${{./release-note.sh}}
+          prerelease: false
+          body: ${{steps.github_release.outputs.changelog}}
