@@ -10,18 +10,11 @@ jobs:
     name: Release nhctl
     runs-on: macos-latest
     steps:
-      - name: Build Changelog
-        id: github_release
-        if: "!contains(github.ref,'rc')"
-        uses: mikepenz/release-changelog-builder-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          owner: "lyzhang1999"
-          repo: "action"
-          ignorePreReleases: "true"
-          toTag: ${{ github.ref }}
-          token: ${{ env.GITHUB_TOKEN }}
+
+      - name: Release Note
+        id: release-note
+        run: |
+          echo "::set-output name=note::$(./release-note.sh v0.1.0 github.ref)"
 
       - name: Create Release
         id: create_release
@@ -33,4 +26,4 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          body: ${{steps.github_release.outputs.changelog}}
+          body: ${{ steps.pre-release.outputs.note }}
