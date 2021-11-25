@@ -33,4 +33,5 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          body: ${{ steps.release-note.outputs.note }}
+          body: |
+            ${{ steps.release-note.outputs.note }}
